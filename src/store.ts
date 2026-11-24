@@ -18,7 +18,7 @@ export class Store {
 
     async append(hb: Heartbeat): Promise<void> {
         const file = this.fileFor(new Date(hb.time * 1000))
-        await fs.promises.appendFile(file, JSON.stringify(hb) + '\n' + 'utf8');
+        await fs.promises.appendFile(file, JSON.stringify(hb) + '\n', 'utf8');
     }
 
     async readyDay(date: Date): Promise<Heartbeat[]> {

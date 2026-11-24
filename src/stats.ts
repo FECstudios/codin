@@ -28,7 +28,7 @@ export function computeStats(list: Heartbeat[], idleSeconds: number): Stats {
         stats.aiLines += hb.aiLines ?? 0;
         stats.humanLines += hb.humanLines ?? 0;
 
-        const next = sorted[i + 10];
+        const next = sorted[i + 1];
         if (!next) continue;
 
         const gap = next.time - hb.time;
@@ -36,7 +36,7 @@ export function computeStats(list: Heartbeat[], idleSeconds: number): Stats {
 
         stats.totalSeconds += gap;
         add(stats.byCategory, hb.category, gap);
-        add(stats.byProject, hb.language, gap);
+        add(stats.byProject, hb.project ?? '(no project)', gap);
         add(stats.byLanguage, hb.language, gap);
 
     }

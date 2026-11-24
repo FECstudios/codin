@@ -37,8 +37,13 @@ export function activate(context: vscode.ExtensionContext) {
 		bar,
 		tracker,
 		{dispose: () => clearInterval(interval) },
-		vscode.commands.registerCommand('vscode-codin-stats', async () => {
-			vscode.env.openExternal(vscode.Uri.file(store.dir));
+		vscode.commands.registerCommand('vscode-codin.stats', async () => {
+			const stats = computeStats(await store.readyDay(new Date()), IDLE_SECONDS);
+			const doc = await vscode.workspace.openTextDocument({
+				language: 'markdown',
+				content: report(stats),
+			});
+			await vscode.window.showTextDocument(doc);
 		}),
 
 		vscode.commands.registerCommand('vscode-codin.openFolder', () => {
