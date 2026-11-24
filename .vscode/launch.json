@@ -1,0 +1,17 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Run Extension",
+			"type": "extensionHost",
+			"request": "launch",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}/vscode-codin"
+			],
+			"outFiles": [
+				"${workspaceFolder}/vscode-codin/out/**/*.js"
+			],
+			"preLaunchTask": "watch vscode-codin"
+		}
+	]
+}
