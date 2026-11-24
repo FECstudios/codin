@@ -3,6 +3,7 @@
   "publisher": "kuzey",
   "version": "0.0.1",
   "description": "A hackatime alternative's vs code extention",
+  "license": "AGPL-3.0-only",
   "type": "commonjs",
   "main": "./out/extension.js",
   "scripts": {

@@ -1,2 +1,6 @@
 # codin
-A hackatime alternative 
+A hackatime alternative
+
+## License
+
+[GNU AGPLv3](LICENSE)
