@@ -1,0 +1,54 @@
+{
+  "name": "vscode-codin",
+  "publisher": "kuzey",
+  "version": "0.0.1",
+  "description": "A hackatime alternative's vs code extention",
+  "type": "commonjs",
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.146.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "24.x",
+    "typescript-eslint": "^8.61.1",
+    "eslint": "^10.5.0",
+    "typescript": "^6.0.3",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.0.0"
+  },
+  "engines": {
+    "vscode": "^1.146.0"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.6"
+  },
+  "displayName": "vscode-codin",
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-codin.stats",
+        "title": "Codin: show stats"
+      },
+            {
+        "command": "vscode-codin.openFolder",
+        "title": "Codin: open data folder"
+      },
+            {
+        "command": "vscode-codin.showLog",
+        "title": "Codin: show logs"
+      }
+    ]
+  }
+}
