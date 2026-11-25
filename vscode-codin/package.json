@@ -1,9 +1,9 @@
 {
   "name": "vscode-codin",
   "publisher": "kuzey",
+  "license": "AGPL-3.0-only",
   "version": "0.0.1",
   "description": "A hackatime alternative's vs code extention",
-  "license": "AGPL-3.0-only",
   "type": "commonjs",
   "main": "./out/extension.js",
   "scripts": {
@@ -36,20 +36,11 @@
     "Other"
   ],
   "activationEvents": ["onStartupFinished"],
-  "contributes": {
-    "commands": [
-      {
-        "command": "vscode-codin.stats",
-        "title": "Codin: show stats"
-      },
-            {
-        "command": "vscode-codin.openFolder",
-        "title": "Codin: open data folder"
-      },
-            {
-        "command": "vscode-codin.showLog",
-        "title": "Codin: show logs"
-      }
-    ]
-  }
+    "contributes": {
+      "commands": [
+        { "command": "vscode-codin.stats", "title": "Codin: Show Stats" },
+        { "command": "vscode-codin.openFolder", "title": "Codin: Open Data Folder" },
+        { "command": "vscode-codin.showLog", "title": "Codin: Show Log" }
+      ]
+    }
 }
