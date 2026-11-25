@@ -18,6 +18,7 @@ export type EditKind = 'ai' | 'human' | 'other';
 
 export class AIDetector {
     active = false;
+    agentRunning = false;
     private bigInserts: number[] = [];
     private keystrokes: number[] = [];
 
@@ -36,7 +37,12 @@ export class AIDetector {
         if (!(input instanceof vscode.TabInputWebview)) return false;
         const  viewType = input.viewType.toLowerCase();
         return AI_TABS.some((name) => viewType.includes(name));
+    }
 
+    isExternal(e: vscode.TextDocumentChangeEvent): boolean {
+        if (e.document.uri.scheme !== 'file') return false;
+        if (e.reason !== undefined) return false;
+        return !vscode.window.state.focused;
     }
 
     classify(e: vscode.TextDocumentChangeEvent): EditKind {
@@ -48,6 +54,11 @@ export class AIDetector {
         }
         if (e.contentChanges.length === 0) return 'other';
 
+        if (this.isExternal(e)) {
+            this.active = true;
+            return 'ai';
+        }
+
         if(isKeystroke(e)) {
             this.keystrokes = this.keystrokes.filter((t) => now - t < 1500);
             this.keystrokes.push(now);
@@ -57,7 +68,7 @@ export class AIDetector {
         
         if(!isBigInserts(e)) return this.active ? 'ai' : 'other';
 
-        const aiInstalled = this.hasAIExtention();
+        const aiInstalled = this.hasAIExtention() || this.agentRunning;
         const focused = vscode.window.activeTextEditor?.document === e.document;
 
         if(aiInstalled && !focused) {

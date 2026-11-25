@@ -1,4 +1,4 @@
-export type Category = 'coding' | 'ai coding' | 'debugging' | 'building';
+export type Category = 'coding' | 'ai coding' | 'debugging'  | 'reviewing' | 'building' | 'testing' | 'terminal';
 
 export interface Heartbeat {
     time: number;

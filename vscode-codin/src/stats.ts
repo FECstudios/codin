@@ -1,4 +1,4 @@
-import { Heartbeat  } from "./types";  
+import { Category, Heartbeat  } from "./types";  
 
 export interface Stats {
     totalSeconds: number;
@@ -7,6 +7,14 @@ export interface Stats {
     byLanguage: Record<string, number>;
     aiLines: number;
     humanLines: number;
+}
+
+const IDLE_BY_CATEGORY: Partial<Record<Category, number>>= {
+    'reviewing': 5 * 60,
+    'terminal': 10 * 60,
+    'debugging': 30 * 60,
+    'building': 30 * 60,
+    'testing': 30 * 60
 }
 
 // calculations
@@ -32,7 +40,8 @@ export function computeStats(list: Heartbeat[], idleSeconds: number): Stats {
         if (!next) continue;
 
         const gap = next.time - hb.time;
-        if (gap <= 0 || gap > idleSeconds) continue;
+        const limit = IDLE_BY_CATEGORY[hb.category] ?? idleSeconds;
+        if (gap <= 0 || gap > limit) continue;
 
         stats.totalSeconds += gap;
         add(stats.byCategory, hb.category, gap);

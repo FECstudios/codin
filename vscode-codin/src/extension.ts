@@ -21,9 +21,21 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const refresh = async () => {
 		const stats = computeStats(await store.readyDay(new Date()), IDLE_SECONDS);
-		const ai = stats.byCategory['ai coding'] ?? 0;
-		bar.text = `$(clock) ${formatDuration(stats.totalSeconds)}`;
-		bar.tooltip = `Today ${formatDuration(stats.totalSeconds)} (AI: ${formatDuration(ai)})`; 
+		//const ai = stats.byCategory['ai coding'] ?? 0;
+		//bar.text = `$(clock) ${formatDuration(stats.totalSeconds)}`;
+		//bar.tooltip = `Today ${formatDuration(stats.totalSeconds)} (AI: ${formatDuration(ai)})`; 
+		const c = stats.byCategory;
+		const typing = c['coding'] ?? 0;
+		const review = c['reviewing'] ?? 0;
+		const ai = c['ai coding'] ?? 0;
+
+		bar.text = [
+			`$(keyboard) ${formatDuration(typing)}`,
+			`$(eye) ${formatDuration(review)}`,
+			`$(hubot) ${formatDuration(ai)}`,
+		].join(' · ');
+		bar.tooltip = tooltip(stats);
+	
 	};
 
 	const tracker = new Tracker(store, log, refresh);
@@ -83,4 +95,15 @@ function report(s: Stats): string {
 		lines.push('');
 	}
 	return lines.join('\n');
+}
+
+function tooltip(s: Stats): vscode.MarkdownString {
+	const md = new vscode.MarkdownString(`**Today: ${formatDuration(s.totalSeconds)}**\n\n`);
+	const sorted = Object.entries(s.byCategory).sort((a, b) => b[1] - a[1]);
+
+	for (const [name, secs] of sorted) {
+		md.appendMarkdown(`- ${name}: ${formatDuration(secs)}\n`);
+	}
+	md.appendMarkdown(`\nLines: ${s.humanLines} human, ${s.aiLines} AI`)
+	return md;
 }
