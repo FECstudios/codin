@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "module": "nodenext",
+        "target": "es2025",
+        "outDir": "out",
+        "rootDir": "src",
+        "strict": true,
+        "types": ["node"]
+    }
+}
